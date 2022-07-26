@@ -1,5 +1,27 @@
+#=
+    An ear is a convex vertex such that the triangle
+    formed by it and it's neighbours contains
+    no other vertex
+
+    A convex vertex is has an interior angle < \pi
+    formed by the lines to it's neighbours
+=#
 function isEar(p::Polygon,i::Int)::Bool
-    return angleSign(p,i) == Right
+    if angleSign(p,i) == Left
+        return false
+    end
+
+    tri = consecutiveTriple(p,i)
+
+    for v in p.vertices
+        if (v != tri[1] && v != tri[2] && v != tri[3])
+            if (pointInTriangle(v,tri...))
+                return false
+            end
+        end
+    end
+
+    return true
 end
 
 function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
@@ -40,7 +62,7 @@ function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
     R = Vector{Int}([])
     s = nextIndex(e+1,n) #mod((e-1)+2,n)+1
     while s != i
-        if (pointInTriangle(p.vertices[s],a,intersection,pk1))
+        if (pointInTriangle(p.vertices[s],b,intersection,pk1))
             push!(R,i)
         end
         s += 1
@@ -52,7 +74,7 @@ function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
     if (length(R)==0)
 
         if (pk1 != a)
-            return e,nextIndex(e,n)#mod((e-1)+1,n)+1
+            return i,nextIndex(e,n)#mod((e-1)+1,n)+1
         end
 
         #return i,mod((i-1)-1,n)+1
@@ -99,9 +121,11 @@ function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
 
         w = S[argmin(θs)]
 
-        return b,w
+        return i,w
 
     end
+
+    return i,i
 
 end
 
@@ -120,11 +144,17 @@ function goodSubPolygon(p::Polygon,i::Int,j::Int)::Polygon
 end
 
 function findEar(p::Polygon,i::Int)::Int
+
     if isEar(p,i)
         return i
     end
 
     i,j = findDiagonal(p,i)
+
+    if (j == i)
+        return i
+    end
+
     q = goodSubPolygon(p,i,j)
 
     return findEar(q,Int(floor(length(q)/2.0)))
