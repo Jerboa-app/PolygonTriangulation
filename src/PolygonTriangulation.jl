@@ -10,16 +10,14 @@ include("findEar.jl")
 export triangulate, Vertex, Polygon, +,-,*,/,⋅,×,norm,Hand,handedNess,Left,Right
 
 function triangulate(p::Polygon)::Vector{Vector{Vertex}}
-
+    q = Polygon(p.vertices)
     if (handedNess(p) == Left)
         @warn "Given Left handed Polygon, converting to Right handed"
-        p = Polygon(reverse(p.vertices))
+        q = Polygon(reverse(p.vertices))
     end
-    
-    q = Polygon(p.vertices)
     triangles = Vector{Vector{Vertex}}([])
     while length(q)>3
-        ear = findEar(p,1)
+        ear = findEar(q,1)
         v = Vector{Vertex}([])
         for i in 1:length(q)
             if i != ear
