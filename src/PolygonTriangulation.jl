@@ -20,7 +20,6 @@ function triangulate(p::Polygon)::Vector{Vector{Vertex}}
                 push!(v,q.vertices[i])
             end
         end
-        @show q.vertices[ear]
         push!(triangles,[consecutiveTriple(q,ear)...])
         q = Polygon(v)
     end

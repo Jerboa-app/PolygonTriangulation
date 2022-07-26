@@ -74,7 +74,7 @@ function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
     if (length(R)==0)
 
         if (pk1 != a)
-            return i,nextIndex(e,n)#mod((e-1)+1,n)+1
+            return i,nextIndex(e+1,n)#mod((e-1)+1,n)+1
         end
 
         #return i,mod((i-1)-1,n)+1

@@ -14,4 +14,17 @@ using Test
 
     @test triangulate(P) == [[P.vertices[4],P.vertices[1],P.vertices[2]],[P.vertices[2],P.vertices[3],P.vertices[4]]]
 
+    P = Polygon(
+        [
+            Vertex(0.0,0.0),
+            Vertex(0.33,1.25),
+            Vertex(0.575,0.75),
+            Vertex(1.,1.)
+        ]
+    )
+
+    @test triangulate(P) == [
+                        [Vertex(0.0, 0.0), Vertex(0.33, 1.25), Vertex(0.575, 0.75)],
+                        [Vertex(0.0, 0.0), Vertex(0.575, 0.75), Vertex(1.0, 1.0)]
+                      ]
 end
