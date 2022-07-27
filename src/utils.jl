@@ -6,20 +6,26 @@ function lineLineSegmentIntersection(
         v::Vertex
 )::Vertex
 
-    a = q-p
-    b = v-p
-    c = u-p
+    a = p - u
+    b = v - u
+    c = Vertex(-q.y,q.x)
 
-    if (×(a,b)*×(a,c) <= 0)
-        # intersects
-        r = q-p
-        r = r / norm(r)
-        vn = v / norm(v)
-        return r*norm(v-p)/(vn⋅r)
-    else
-        # no intersection
+    dot = b⋅c
+
+    s = ×(b,a)/dot
+
+    if (s < 0.)
         return NULL_VERTEX
     end
+
+    t = a⋅c/dot
+
+    if (t >= 0. && t <= 1.)
+        return p+q*s
+    end
+
+    return NULL_VERTEX
+
 end
 
 function pointInTriangle(point::Vertex,r1::Vertex,r2::Vertex,r3::Vertex)::Bool
