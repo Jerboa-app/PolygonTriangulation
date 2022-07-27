@@ -1,6 +1,6 @@
 ### PolygonTriangulation
 
-Triangulate polygons in Julia using the O(n^2), for n = vertex count, algorithm of ElGindy et al, [Slicing and Ear Using Prune and Search](https://www.sciencedirect.com/science/article/abs/pii/016786559390141Y)
+Triangulate polygons in Julia using the O(n^2), for n = vertex count, algorithm of ElGindy et al, [Slicing an Ear Using Prune and Search](https://www.sciencedirect.com/science/article/abs/pii/016786559390141Y)
 
 You probably want to use [Triangle.jl](https://github.com/cvdlab/Triangle.jl), [Triangulate.jl](https://github.com/JuliaGeometry/Triangulate.jl), [Meshes.jl](https://github.com/JuliaGeometry/Meshes.jl), [Meshing.jl](https://github.com/JuliaGeometry/Meshing.jl), or [VoronoiDelaunay.jl](https://github.com/JuliaGeometry/VoronoiDelaunay.jl)
 

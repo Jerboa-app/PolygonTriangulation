@@ -25,7 +25,6 @@ function lineLineSegmentIntersection(
     end
 
     return NULL_VERTEX
-
 end
 
 function pointInTriangleInterior(point::Vertex,r1::Vertex,r2::Vertex,r3::Vertex)::Bool
