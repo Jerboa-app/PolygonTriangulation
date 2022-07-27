@@ -62,7 +62,7 @@ function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
     R = Vector{Int}([])
     s = nextIndex(e+1,n) #mod((e-1)+2,n)+1
     while s != i
-        if (pointInTriangle(p.vertices[s],b,intersection,pk1))
+        if (pointInTriangleInterior(p.vertices[s],b,intersection,pk1))
             push!(R,i)
         end
         s += 1
@@ -97,7 +97,7 @@ function findDiagonal(p::Polygon,i::Int)::Tuple{Int,Int}
     S = Vector{Int}([])
     s = nextIndex(i,n) # mod((i-1)+1,n)+1
     while s != mod((e-1),n)+1
-        if (pointInTriangle(p.vertices[s],b,intersection,pk))
+        if (pointInTriangleInterior(p.vertices[s],b,intersection,pk))
             push!(S,i)
         end
         s += 1
