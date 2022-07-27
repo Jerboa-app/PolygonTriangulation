@@ -2,7 +2,7 @@ struct Polygon
     vertices::Array{Vertex}
 end
 
-function length(p::Polygon)::UInt64
+function length(p::Polygon)::Int
     return length(p.vertices)
 end
 
@@ -32,11 +32,14 @@ function handedNess(p::Polygon)::Hand
     end
 end
 
-function consecutiveTriple(p::Polygon,i::UInt64)::Tuple{Vertex,Vertex,Vertex}
+previousIndex(i::Int,n::Int) = mod((i-1)-1,n)+1 # julia base 1
+nextIndex(i::Int,n::Int) = mod((i-1)+1,n)+1     # julia base 1
+
+function consecutiveTriple(p::Polygon,i::Int)::Tuple{Vertex,Vertex,Vertex}
     n = length(p)
-    a = p.vertices[mod((i-1)-1,n)+1]
+    a = p.vertices[previousIndex(i,n)]
     b = p.vertices[i]
-    c = p.vertices[mod((i-1)+1,n)+1]
+    c = p.vertices[nextIndex(i,n)]
     return a,b,c
 end
 
@@ -49,14 +52,14 @@ function angle(a::Vertex,b::Vertex,c::Vertex)
     return acos(u⋅v)
 end
 
-function angleSign(p::Polygon,i::UInt64)::Hand
+function angleSign(p::Polygon,i::Int)::Hand
     a,b,c = consecutiveTriple(p,i)
     return (b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x) > 0 ? Left : Right
 end
 
-function angleBisector(p::Polygon,i::UInt64)::Vertex
+function angleBisector(p::Polygon,i::Int)::Vertex
     a,b,c = consecutiveTriple(p,i)
-    u = b-a
+    u = a-b
     v = c-b
     return norm(u)*v+norm(v)*u
 end

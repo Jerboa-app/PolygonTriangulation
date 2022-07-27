@@ -11,9 +11,13 @@ export triangulate, Vertex, Polygon, +,-,*,/,⋅,×,norm,Hand,handedNess,Left,Ri
 
 function triangulate(p::Polygon)::Vector{Vector{Vertex}}
     q = Polygon(p.vertices)
+    if (handedNess(p) == Left)
+        @warn "Given Left handed Polygon, converting to Right handed"
+        q = Polygon(reverse(p.vertices))
+    end
     triangles = Vector{Vector{Vertex}}([])
     while length(q)>3
-        ear = findEar(p,UInt64(1))
+        ear = findEar(q,1)
         v = Vector{Vertex}([])
         for i in 1:length(q)
             if i != ear
