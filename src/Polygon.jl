@@ -60,6 +60,8 @@ end
 function angleBisector(p::Polygon,i::Int)::Vertex
     a,b,c = consecutiveTriple(p,i)
     u = a-b
+    u = u / norm(u)
     v = c-b
-    return norm(u)*v+norm(v)*u
+    v = v / norm(v)
+    return v+u
 end
