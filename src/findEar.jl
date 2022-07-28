@@ -58,6 +58,7 @@ function findDiagonal(p::Polygon,i::Int,events::MaybeEvents)::Tuple{Int,Int}
     if (intersection == NULL_VERTEX)
         seen += 1
         e+=1
+        if (e > length(p)) e = 1 end
     end
 
     while (seen < length(E) && intersection == NULL_VERTEX)
@@ -157,18 +158,57 @@ function findDiagonal(p::Polygon,i::Int,events::MaybeEvents)::Tuple{Int,Int}
 
 end
 
-function goodSubPolygon(p::Polygon,i::Int,j::Int)::Polygon
+function isGood(p::Polygon,q::Polygon)::Bool
+    diff = 0
+    pe = PolygonTriangulation.edges(p)
+    for e in PolygonTriangulation.edges(q)
+        if (e in pe)==false
+            diff+=1
+        end
+
+        if (diff > 1)
+            return false
+        end
+    end
+
+    if diff <= 1
+        return true
+    else
+        return false
+    end
+end
+
+function goodSubPolygon(p::Polygon,q::Polygon,i::Int,j::Int)::Polygon
     v = []
     k = i
     while k != j
-        push!(v,p.vertices[k])
+        push!(v,q.vertices[k])
         k+=1
-        if (k > length(p))
+        if (k > length(q))
             k = 1
         end
     end
-    push!(v,p.vertices[j])
+    push!(v,q.vertices[j])
+
+    gsp = Polygon(v)
+
+    if isGood(p,gsp)
+        return gsp
+    end
+
+    v = []
+    k = j
+    while k != i
+        push!(v,q.vertices[k])
+        k+=1
+        if (k > length(q))
+            k = 1
+        end
+    end
+    push!(v,q.vertices[i])
+
     return Polygon(v)
+
 end
 
 function relabel(p::Polygon,q::Polygon,i::Int,j::Int)::Polygon
@@ -200,17 +240,19 @@ function findEar(p::Polygon,q::Polygon,i::Int,events::MaybeEvents=nothing)::Vert
         return q.vertices[i]
     end
 
-    idI = 0
-    idJ = 0
-    for k in 1:length(p)
-        if p.vertices[k] == q.vertices[i]
-            idI = k
-        elseif p.vertices[k] == q.vertices[j]
-            idJ = k
-        end
-    end
+    # idI = 0
+    # idJ = 0
+    # for k in 1:length(p)
+    #     if p.vertices[k] == q.vertices[i]
+    #         idI = k
+    #     elseif p.vertices[k] == q.vertices[j]
+    #         idJ = k
+    #     end
+    # end
+    #
+    # q = goodSubPolygon(p,idI,idJ)
 
-    q = goodSubPolygon(p,idI,idJ)
+    q = goodSubPolygon(p,q,i,j)
 
     if (events != nothing) push!(events,GoodSubPolygonEvent(q)) end
 
