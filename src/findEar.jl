@@ -240,23 +240,9 @@ function findEar(p::Polygon,q::Polygon,i::Int,events::MaybeEvents=nothing)::Vert
         return q.vertices[i]
     end
 
-    # idI = 0
-    # idJ = 0
-    # for k in 1:length(p)
-    #     if p.vertices[k] == q.vertices[i]
-    #         idI = k
-    #     elseif p.vertices[k] == q.vertices[j]
-    #         idJ = k
-    #     end
-    # end
-    #
-    # q = goodSubPolygon(p,idI,idJ)
-
     q = goodSubPolygon(p,q,i,j)
 
     if (events != nothing) push!(events,GoodSubPolygonEvent(q)) end
-
-    #pRelabeled = relabel(p,q,i,j)
 
     return findEar(p,q,Int(1+floor(length(q)/2.0)),events)
 end
