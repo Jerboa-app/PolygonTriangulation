@@ -1,4 +1,4 @@
-# line p towards q, segment u-v
+# line from p with direction q, segment u-v
 function lineLineSegmentIntersection(
         p::Vertex,
         q::Vertex,
