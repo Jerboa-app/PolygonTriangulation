@@ -1,6 +1,9 @@
-name: Run tests
+name: Run tests Main
 
-on: [pull_request]
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -22,3 +25,4 @@ jobs:
           arch: ${{ matrix.julia-arch }}
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
+
