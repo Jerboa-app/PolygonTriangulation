@@ -1,4 +1,4 @@
-### PolygonTriangulation
+### PolygonTriangulation [![Run tests Main](https://github.com/Jerboa-app/PolygonTriangulation.jl/actions/workflows/main_workflow.yml/badge.svg)](https://github.com/Jerboa-app/PolygonTriangulation.jl/actions/workflows/main_workflow.yml)
 
 #### Triangulate polygons in Julia using the O(n^2), for n = vertex count, algorithm of ElGindy et al, [Slicing an Ear Using Prune and Search](https://www.sciencedirect.com/science/article/abs/pii/016786559390141Y)
 
