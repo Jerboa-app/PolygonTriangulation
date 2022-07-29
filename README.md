@@ -1,6 +1,6 @@
 ### PolygonTriangulation
 
-Triangulate polygons in Julia using the O(n^2), for n = vertex count, algorithm of ElGindy et al, [Slicing an Ear Using Prune and Search](https://www.sciencedirect.com/science/article/abs/pii/016786559390141Y)
+#### Triangulate polygons in Julia using the O(n^2), for n = vertex count, algorithm of ElGindy et al, [Slicing an Ear Using Prune and Search](https://www.sciencedirect.com/science/article/abs/pii/016786559390141Y)
 
 The code is built purposely to rely only on base Julia, rather than use the Julia geometry ecosystem, to give an example of a fully standalone implementation of the algorithm. Julia's geometry ecosystem provides a few more efficient algorithms!
 
