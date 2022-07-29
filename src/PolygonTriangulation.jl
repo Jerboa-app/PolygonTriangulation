@@ -42,4 +42,4 @@ function triangulate(p::Polygon,events::MaybeEvents=nothing)::Vector{Vector{Vert
     return triangles
 end
 
-end # module
+end # module PolygonTriangulation
